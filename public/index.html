@@ -1,44 +1,272 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Emergency Traffic Control</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Traffic Control Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        body {
+            background: #0f172a;
+            color: #fff;
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin: 2rem 0;
+            background: linear-gradient(135deg, #60a5fa, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .emergency-button {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .emergency-button:hover {
+            transform: translateY(-5px);
+            border-color: #3b82f6;
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.3);
+        }
+
+        .emergency-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent
+            );
+            transition: 0.5s;
+        }
+
+        .emergency-button:hover::before {
+            left: 100%;
+        }
+
+        .button-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .pole-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #60a5fa;
+        }
+
+        .pole-title {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+
+        .pole-description {
+            font-size: 0.9rem;
+            color: #94a3b8;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            background: rgba(59, 130, 246, 0.9);
+            color: white;
+            transform: translateX(200%);
+            transition: transform 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+    </style>
 </head>
 <body>
-  <h1>Traffic Control System</h1>
-  <button id="pole1Button">Send Emergency Signal for Pole 1</button>
-  <button id="pole2Button">Send Emergency Signal for Pole 2</button>
-  <button id="pole3Button">Send Emergency Signal for Pole 3</button>
-  <button id="pole4Button">Send Emergency Signal for Pole 4</button>
+    <canvas class="stars"></canvas>
+    <div class="container">
+        <h1>Smart Traffic Control Hub</h1>
+        <div class="grid">
+            <button class="emergency-button" id="pole1Button">
+                <div class="button-content">
+                    <div class="pole-icon">🚦</div>
+                    <h3 class="pole-title">Traffic Pole 1</h3>
+                    <p class="pole-description">North Intersection Control</p>
+                </div>
+            </button>
+            <button class="emergency-button" id="pole2Button">
+                <div class="button-content">
+                    <div class="pole-icon">🚦</div>
+                    <h3 class="pole-title">Traffic Pole 2</h3>
+                    <p class="pole-description">East Intersection Control</p>
+                </div>
+            </button>
+            <button class="emergency-button" id="pole3Button">
+                <div class="button-content">
+                    <div class="pole-icon">🚦</div>
+                    <h3 class="pole-title">Traffic Pole 3</h3>
+                    <p class="pole-description">South Intersection Control</p>
+                </div>
+            </button>
+            <button class="emergency-button" id="pole4Button">
+                <div class="button-content">
+                    <div class="pole-icon">🚦</div>
+                    <h3 class="pole-title">Traffic Pole 4</h3>
+                    <p class="pole-description">West Intersection Control</p>
+                </div>
+            </button>
+        </div>
+    </div>
+    <div class="notification" id="notification">Signal sent successfully!</div>
 
-  <script>
-    document.getElementById('pole1Button').addEventListener('click', () => {
-      sendEmergencySignal('1');
-    });
+    <script>
+        // Star background animation
+        const canvas = document.querySelector('.stars');
+        const ctx = canvas.getContext('2d');
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
 
-    document.getElementById('pole2Button').addEventListener('click', () => {
-      sendEmergencySignal('2');
-    });
-    document.getElementById('pole3Button').addEventListener('click', () => {
-      sendEmergencySignal('3');
-    });
-    document.getElementById('pole4Button').addEventListener('click', () => {
-      sendEmergencySignal('4');
-    });
+        const stars = [];
+        const maxStars = 200;
+        
+        class Star {
+            constructor() {
+                this.reset();
+            }
+            
+            reset() {
+                this.x = Math.random() * width;
+                this.y = 0;
+                this.size = Math.random() * 3;
+                this.speed = 1 + Math.random() * 3;
+                this.opacity = Math.random();
+            }
+            
+            update() {
+                this.y += this.speed;
+                if (this.y > height) {
+                    this.reset();
+                }
+                this.opacity = Math.min(1, this.opacity + 0.01);
+            }
+            
+            draw() {
+                ctx.beginPath();
+                ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
 
-    function sendEmergencySignal(laneMessage) {
-      fetch('/emergency', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ message: laneMessage })
-      })
-        .then(response => response.text())
-        .then(data => alert(data === 'Success' ? 'Signal Sent!' : 'Failed to Send Signal'))
-        .catch(err => console.error(err));
-    }
-  </script>
+        for (let i = 0; i < maxStars; i++) {
+            stars.push(new Star());
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+            stars.forEach(star => {
+                star.update();
+                star.draw();
+            });
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        });
+
+        animate();
+
+        // Traffic control functionality
+        function showNotification(message, isSuccess = true) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.style.background = isSuccess ? 'rgba(59, 130, 246, 0.9)' : 'rgba(239, 68, 68, 0.9)';
+            notification.classList.add('show');
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        function sendEmergencySignal(laneMessage) {
+            fetch('/emergency', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ message: laneMessage })
+            })
+            .then(response => response.text())
+            .then(data => {
+                if (data === 'Success') {
+                    showNotification(`Emergency signal sent to Pole ${laneMessage}!`);
+                } else {
+                    showNotification('Failed to send signal', false);
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                showNotification('Error sending signal', false);
+            });
+        }
+
+        document.getElementById('pole1Button').addEventListener('click', () => sendEmergencySignal('1'));
+        document.getElementById('pole2Button').addEventListener('click', () => sendEmergencySignal('2'));
+        document.getElementById('pole3Button').addEventListener('click', () => sendEmergencySignal('3'));
+        document.getElementById('pole4Button').addEventListener('click', () => sendEmergencySignal('4'));
+    </script>
 </body>
 </html>
