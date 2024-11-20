@@ -33,5 +33,9 @@ For demonstration purposes, the circuit currently consists of 4 lanes, each with
 - green0 is connected to D0, while red1 is connected to D1, green2 is connected to D2, red3 is connected to D3 and so on...
 - the last digit is used to refer to the pin of NodeMCU ESP32 board used in circuit building. (green0 means D0, green6 means D6)
 
+# ESP32 Code
+You can find the ESP32 NodeMCU code for light-switching and MQTT connection within the "test3" directory. Use Arduino IDE for uploading this code to your board.
+Make sure to have the correct drivers installed for operating NodeMCU board, usually listed on the back of the board.
+
 # Website Image
 <img src="https://github.com/quick-fox-03/emergency-signal-traffic-light/blob/main/public/traffic%20site.jpg?raw=true" alt="image of the web application">
