@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emergency Traffic Control</title>
+</head>
+<body>
+  <h1>Traffic Control System</h1>
+  <button id="pole1Button">Send Emergency Signal for Pole 1</button>
+  <button id="pole2Button">Send Emergency Signal for Pole 2</button>
+  <button id="pole3Button">Send Emergency Signal for Pole 3</button>
+  <button id="pole4Button">Send Emergency Signal for Pole 4</button>
+
+  <script>
+    document.getElementById('pole1Button').addEventListener('click', () => {
+      sendEmergencySignal('1');
+    });
+
+    document.getElementById('pole2Button').addEventListener('click', () => {
+      sendEmergencySignal('2');
+    });
+    document.getElementById('pole3Button').addEventListener('click', () => {
+      sendEmergencySignal('3');
+    });
+    document.getElementById('pole4Button').addEventListener('click', () => {
+      sendEmergencySignal('4');
+    });
+
+    function sendEmergencySignal(laneMessage) {
+      fetch('/emergency', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ message: laneMessage })
+      })
+        .then(response => response.text())
+        .then(data => alert(data === 'Success' ? 'Signal Sent!' : 'Failed to Send Signal'))
+        .catch(err => console.error(err));
+    }
+  </script>
+</body>
+</html>

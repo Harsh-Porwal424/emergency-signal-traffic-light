@@ -1,0 +1,15 @@
+{
+  "name": "emergency-traffic-light",
+  "version": "1.0.0",
+  "description": "A small website to simulated behaviour of an automated traffic light during emergency vehicle pass",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "quick-fox-03",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.1",
+    "mqtt": "^5.10.2"
+  }
+}
