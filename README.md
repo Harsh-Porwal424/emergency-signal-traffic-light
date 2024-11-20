@@ -34,4 +34,4 @@ For demonstration purposes, the circuit currently consists of 4 lanes, each with
 - the last digit is used to refer to the pin of NodeMCU ESP32 board used in circuit building. (green0 means D0, green6 means D6)
 
 # Website Image
-<img src="" alt="image of the web application">
+<img src="https://github.com/quick-fox-03/emergency-signal-traffic-light/blob/main/public/traffic%20site.jpg?raw=true" alt="image of the web application">
