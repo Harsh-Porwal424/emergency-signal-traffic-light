@@ -5,8 +5,8 @@ const bodyParser = require('body-parser');
 const app = express();
 
 // Ngrok MQTT details
-const brokerUrl = "mqtt://0.tcp.in.ngrok.io:13293"; // Include port directly in the URL
-const topic = "traffic/emergency";
+const brokerUrl = "mqtt://test.mosquitto.org:1883"; // Include port directly in the URL
+const topic = "68cfa7deca02d6820ea306951cce1585545bdc3b53428c74d9f4c2b78021cef2";
 
 // MQTT Client
 const client = mqtt.connect(brokerUrl);
