@@ -4,8 +4,7 @@
   "description": "A small website to simulated behaviour of an automated traffic light during emergency vehicle pass",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "quick-fox-03",
   "license": "ISC",
